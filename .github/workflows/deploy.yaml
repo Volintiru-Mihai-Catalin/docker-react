@@ -13,6 +13,12 @@ jobs:
       - run: docker build -t cygnetops/react-test -f Dockerfile.dev .
       - run: docker run -e CI=true cygnetops/react-test npm test
 
+      - name: Build React App
+        run: |
+          npm install
+          npm run build
+          zip -r deploy.zip build
+
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v18
         with:
