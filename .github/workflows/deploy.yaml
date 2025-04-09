@@ -13,13 +13,8 @@ jobs:
       - run: docker build -t cygnetops/react-test -f Dockerfile.dev .
       - run: docker run -e CI=true cygnetops/react-test npm test
 
-      - name: Build React App
-        run: |
-          npm install
-          npm run build
-          zip -r deploy.zip Dockerfile build
-
-      - name: Prepare deployment package for Elastic Beanstalk
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
 
 
       - name: Deploy to EB
